@@ -5,8 +5,15 @@ Thumbs.db
 # Entwicklungsumgebungen
 .vscode/
 .idea/
+.vs/
 
-# Sensible Testdaten blockieren
+# Temporäre Dateien und Logs
+*.tmp
+*.log
+Logs/
+Temp/
+
+# Sensible Testdaten blockieren (für euer aktuelles Projekt extrem wichtig!)
 *.xlsx
 *.csv
 *.sqlite
