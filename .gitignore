@@ -1,0 +1,13 @@
+# Betriebssystem-Dateien
+.DS_Store
+Thumbs.db
+
+# Entwicklungsumgebungen
+.vscode/
+.idea/
+
+# Sensible Testdaten blockieren
+*.xlsx
+*.csv
+*.sqlite
+*.db
