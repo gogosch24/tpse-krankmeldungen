@@ -6,6 +6,22 @@ Thumbs.db
 .vscode/
 .idea/
 .vs/
+*.iml
+
+# Java & Build-Tools (Maven / Gradle / IntelliJ)
+*.class
+*.jar
+*.war
+*.ear
+target/
+build/
+out/
+.gradle/
+hs_err_pid*
+
+# Fertige Windows-Installer (z. B. über jpackage)
+*.exe
+*.msi
 
 # Temporäre Dateien und Logs
 *.tmp
@@ -13,8 +29,12 @@ Thumbs.db
 Logs/
 Temp/
 
-# Sensible Testdaten blockieren (für euer aktuelles Projekt extrem wichtig!)
+# Sensible Testdaten, generierte PDFs und Zugangsdaten blockieren
 *.xlsx
 *.csv
 *.sqlite
 *.db
+*.env
+config.local.properties
+output/
+testdaten/
