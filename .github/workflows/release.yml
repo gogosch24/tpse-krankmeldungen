@@ -1,0 +1,82 @@
+name: Windows und Mac Programm bauen
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Code herunterladen
+        uses: actions/checkout@v4
+
+      - name: Java 21 einrichten
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Projekt mit Maven bauen
+        run: mvn clean package
+
+      - name: Windows-Programm verpacken
+        run: jpackage --type app-image --name KrankmeldungenTool --input target/jpackage-input --main-jar krankmeldungen-tool-1.0-SNAPSHOT.jar --main-class Launcher --dest target/dist
+
+      - name: Als ZIP-Datei verpacken
+        shell: pwsh
+        run: Compress-Archive -Path target/dist/KrankmeldungenTool -DestinationPath KrankmeldungenTool-Windows.zip -Force
+
+      - name: Windows-ZIP zwischenspeichern
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-build
+          path: KrankmeldungenTool-Windows.zip
+
+  build-mac:
+    runs-on: macos-latest
+    steps:
+      - name: Code herunterladen
+        uses: actions/checkout@v4
+
+      - name: Java 21 einrichten
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Projekt mit Maven bauen
+        run: mvn clean package
+
+      - name: Mac-App verpacken
+        run: jpackage --type app-image --name KrankmeldungenTool --input target/jpackage-input --main-jar krankmeldungen-tool-1.0-SNAPSHOT.jar --main-class Launcher --dest target/dist
+
+      - name: Mac-App sauber als ZIP verpacken
+        run: ditto -c -k --keepParent target/dist/KrankmeldungenTool.app KrankmeldungenTool-Mac.zip
+
+      - name: Mac-ZIP zwischenspeichern
+        uses: actions/upload-artifact@v4
+        with:
+          name: mac-build
+          path: KrankmeldungenTool-Mac.zip
+
+  release:
+    needs: [ build-windows, build-mac ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Beide ZIP-Dateien einsammeln
+        uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
+
+      - name: Als Download auf GitHub veröffentlichen
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v0.1-abgabe
+          name: "Abgabe v0.1 - Hello World Fenster"
+          files: |
+            KrankmeldungenTool-Windows.zip
+            KrankmeldungenTool-Mac.zip
