@@ -24,7 +24,7 @@ jobs:
         run: mvn clean package
 
       - name: Windows-Programm verpacken
-        run: jpackage --type app-image --name KrankmeldungenTool --input target/jpackage-input --main-jar krankmeldungen-tool-1.0-SNAPSHOT.jar --main-class Launcher --dest target/dist
+        run: jpackage --type app-image --name KrankmeldungenTool --input target/jpackage-input --main-jar krankmeldungen-tool-1.0-SNAPSHOT.jar --main-class ui.Launcher --dest target/dist
 
       - name: Als ZIP-Datei verpacken
         shell: pwsh
@@ -52,7 +52,7 @@ jobs:
         run: mvn clean package
 
       - name: Mac-App verpacken
-        run: jpackage --type app-image --name KrankmeldungenTool --input target/jpackage-input --main-jar krankmeldungen-tool-1.0-SNAPSHOT.jar --main-class Launcher --dest target/dist
+        run: jpackage --type app-image --name KrankmeldungenTool --input target/jpackage-input --main-jar krankmeldungen-tool-1.0-SNAPSHOT.jar --main-class ui.Launcher --dest target/dist
 
       - name: Mac-App sauber als ZIP verpacken
         run: ditto -c -k --keepParent target/dist/KrankmeldungenTool.app KrankmeldungenTool-Mac.zip
