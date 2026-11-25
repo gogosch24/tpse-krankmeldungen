@@ -29,12 +29,15 @@ hs_err_pid*
 Logs/
 Temp/
 
-# Sensible Testdaten, generierte PDFs und Zugangsdaten blockieren
+# Sensible Testdaten, H2-Datenbank, generierte PDFs und Zugangsdaten blockieren
 *.xlsx
 *.csv
 *.sqlite
 *.db
+*.mv.db
+*.trace.db
 *.env
 config.local.properties
+data/
 output/
 testdaten/
